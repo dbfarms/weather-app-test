@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import fetchJsonp from 'fetch-jsonp'
 import logo from './logo.svg';
 import './App.css';
 
@@ -17,7 +18,12 @@ class App extends Component {
   //to get lat and long
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(position => {
-      console.log(position)
+      const { latitude, longitude } = position.coords 
+      console.log(latitude)
+      console.log(longitude)
+      fetchJsonp(`${APIURL}${latitude},${longitude}`)
+        .then(response => response.json())
+        .then(forecast => console.log(forecast))
     });
   }
   
